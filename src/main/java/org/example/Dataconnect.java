@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Dataconnect {
+    // Gegevens voor databaseverbinding
     private final String DB_URL = "jdbc:mysql://10.0.0.69:3306/moudeh1789_tod";
     private final String USER = "moudeh1789_tod";
     private final String PASSWORD = "r0JiaJ3jF3IYhn7Q";
 
+    // Constructor om een databaseverbinding tot stand te brengen
     public Dataconnect() {
         try {
             DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -18,7 +20,7 @@ public class Dataconnect {
         }
     }
 
-
+    // Methode om een nieuwe taak aan de database toe te voegen
     public void insertTodo(String taak, Todoitems newItem) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String query = "INSERT INTO TODO (id ,taak,done) VALUES (?,?,?)";
@@ -38,7 +40,7 @@ public class Dataconnect {
             System.out.println(exception.getMessage());
         }
     }
-
+    // Methode om een taak uit de database te verwijderen op basis van de ID
     public void deleteTodo(String id) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String query = "DELETE FROM TODO WHERE id = ?";
@@ -52,7 +54,7 @@ public class Dataconnect {
         }
     }
 
-
+    // Methode om alle taken uit de database op te halen
     public ArrayList<Todoitems> getalltodos() throws SQLException {
         ArrayList<Todoitems> todos = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
@@ -71,7 +73,7 @@ public class Dataconnect {
         return todos;
     }
 
-
+    // Methode om de voltooiingsstatus van een taak in de database bij te werken
     public void updateTodoCompletionStatus(String taak, boolean completed) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String query = "UPDATE TODO SET done = ? WHERE taak = ?";
@@ -85,7 +87,7 @@ public class Dataconnect {
             System.out.println(exception.getMessage());
         }
     }
-
+    // Methode om de tekst van een taak in de database bij te werken
     public void updateTodoText(String oldText, String newText) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
             String query = "UPDATE TODO SET taak = ? WHERE taak = ?";

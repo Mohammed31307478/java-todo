@@ -17,6 +17,7 @@ public class Text extends JPanel {
     JList<Todoitems> toDoListJList = new JList<>(listModel);
 
     public Text() {
+        // GUI-componenten
         JTextField textinput = new JTextField(20);
         JButton voeginput = new JButton("toevoegen");
         JButton bewerk = new JButton("bewerken");
@@ -27,7 +28,7 @@ public class Text extends JPanel {
         JButton onvoltooid = new JButton("onvoltooid");
         JButton sorteren = new JButton("sorteren");
 
-
+// zichtbaarheid van sommige knoppen
         add(onvoltooid);
         onvoltooid.setVisible(false);
         add(textinput);
@@ -41,18 +42,18 @@ public class Text extends JPanel {
         add(terug);
         add(sorteren);
         terug.setVisible(false);
-        //toDoListJList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
         // Aangepaste renderer om checkbox weer te geven
         toDoListJList.setCellRenderer(new CheckboxListCellRenderer());
 
-
+// Laden van taken uit de database
         try {
             toDoList = dataconnect.getalltodos(); // Gebruik Todoitems in plaats van strings
             updateToDoItemsLabel();
         } catch (SQLException e) {
             System.out.println("Fout bij het ophalen van taken uit de database: " + e.getMessage());
         }
-
+        // ActionListener voor toevoegen van een nieuwe taak
         voeginput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,7 +67,7 @@ public class Text extends JPanel {
                 }
             }
         });
-
+        // ActionListener voor verwijderen van geselecteerde taken
         verwijdergeselecteerde.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,7 +79,7 @@ public class Text extends JPanel {
                 }
             }
         });
-
+        // ActionListener voor markeren van geselecteerde taken als voltooid
         voltooid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,7 +93,7 @@ public class Text extends JPanel {
             }
         });
 
-
+        // ActionListener voor bewerken van geselecteerde taak
         bewerk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -105,6 +106,7 @@ public class Text extends JPanel {
                         dataconnect.updateTodoText(selectedTask.getTaak(), editedText);
 
                     }
+                    //instellingen van zichtbaarheid knoppen
                     textinput.setVisible(false);
                     voeginput.setVisible(false);
                     bewerk.setVisible(false);
@@ -118,9 +120,11 @@ public class Text extends JPanel {
             }
 
         });
+        // ActionListener voor terugkeren naar normale weergave
         terug.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Instellingen voor zichtbaarheid van knoppen
 
                 textinput.setVisible(true);
                 voeginput.setVisible(true);
@@ -136,6 +140,7 @@ public class Text extends JPanel {
 
 
         });
+        // ActionListener voor markeren van geselecteerde taken als onvoltooid
         onvoltooid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -149,7 +154,7 @@ public class Text extends JPanel {
             }
 
         });
-
+        // ActionListener voor sorteren van taken
         sorteren.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -159,7 +164,7 @@ public class Text extends JPanel {
         });
 
     }
-
+    // Methode om de lijstweergave bij te werken
     private void updateToDoItemsLabel() {
         listModel.clear();
         for (Todoitems item : toDoList) {

@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Windowtodo extends JFrame {
-    //private ArrayList<String> toDoList = new ArrayList<>(); // Hier wordt de lijst aangemaakt
 
     public Windowtodo() {
 
